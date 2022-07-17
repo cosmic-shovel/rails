@@ -94,7 +94,7 @@ module ActionController # :nodoc:
 
       # The strategy to use for storing and retrieving CSRF tokens.
       config_accessor :csrf_token_storage_strategy
-      self.csrf_token_storage_strategy = SessionStore.new
+      self.csrf_token_storage_strategy = CookieStore.new
 
       helper_method :form_authenticity_token
       helper_method :protect_against_forgery?
