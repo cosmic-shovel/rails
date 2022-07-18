@@ -94,7 +94,7 @@ module ActionController # :nodoc:
 
       # The strategy to use for storing and retrieving CSRF tokens.
       config_accessor :csrf_token_storage_strategy
-      self.csrf_token_storage_strategy = CookieStore.new
+      self.csrf_token_storage_strategy = storage_strategy(CookieStore.new)
 
       helper_method :form_authenticity_token
       helper_method :protect_against_forgery?
@@ -177,7 +177,7 @@ module ActionController # :nodoc:
         self.forgery_protection_strategy = protection_method_class(options[:with] || :null_session)
         self.request_forgery_protection_token ||= :authenticity_token
 
-        self.csrf_token_storage_strategy = storage_strategy(options[:store] || SessionStore.new)
+        self.csrf_token_storage_strategy = storage_strategy(options[:store] || CookieStore.new)
 
         before_action :verify_authenticity_token, options
         append_after_action :verify_same_origin_request
